@@ -1,6 +1,7 @@
 certifi==2026.6.17
 charset-normalizer==3.4.7
 idna==3.18
+numpy==2.5.1
 regex==2026.5.9
 requests==2.34.2
 tiktoken==0.13.0

@@ -30,6 +30,20 @@ Sample generations at increasing training steps show a clear qualitative progres
 
 Implemented temperature, top-k, and top-p (nucleus) sampling from scratch, applied to the trained model's output distribution. Lower temperature produces more conservative, syntactically coherent output; higher temperature produces more varied but less structured text.
 
+## KV Caching Benchmark
+
+Implemented KV caching (reusing previously computed Key/Value projections
+instead of recomputing them at every generation step) and benchmarked it
+against naive generation.
+
+Result: **1.61x speedup** generating 100 tokens (0.44s naive vs 0.27s cached).
+
+At this small model/sequence scale, caching overhead limits the speedup,
+but the mechanism is correctly demonstrated — at production scale (longer
+sequences, larger models), this same technique provides dramatically
+larger speedups, which is why it's a standard requirement for real LLM
+inference serving.
+
 ## Known limitations
 
 - **No end-of-sequence handling**: the vocabulary has no `<eos>` token, so generation always runs for a fixed number of characters rather than naturally stopping at a logical boundary. A future improvement would be inserting an EOS marker between training files and teaching the model to predict it.
